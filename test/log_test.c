@@ -19,6 +19,4 @@ int main(int argc, char const *argv[])
     3: warn
     4: error
     5: fatal
-
-
 */
