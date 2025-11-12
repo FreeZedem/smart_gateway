@@ -124,7 +124,7 @@ int app_buffer_read(buffer_handle_t *buffer_handle, char *data, int data_capacit
     {
         // 没有数据读，准备交换缓冲区
         pthread_mutex_lock(&buffer->write_lock);
-        log_info("app_buffer_read no data");
+        // log_info("app_buffer_read no data");
         buffer->read_index ^= buffer->write_index;
         buffer->write_index ^= buffer->read_index;
         buffer->read_index ^= buffer->write_index;
@@ -134,7 +134,7 @@ int app_buffer_read(buffer_handle_t *buffer_handle, char *data, int data_capacit
         //交换之后还是没有数据，所以结束
         if (read_buffer->len == 0)
         {
-            log_warn("app_buffer_read no data");
+            // log_warn("app_buffer_read no data");
             pthread_mutex_unlock(&buffer->read_lock);
             return 0;
         }

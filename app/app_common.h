@@ -1,5 +1,6 @@
 #ifndef __APP_COMMON_H__
 #define __APP_COMMON_H__
+#define _GNU_SOURCE  // 使用posix 扩展功能 . 必须时所有依赖的第1行
 
 #include "log/log.h"
 #include "cjson/cJSON.h"
