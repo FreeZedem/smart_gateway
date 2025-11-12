@@ -5,6 +5,7 @@ log := thirdparty/log/log.c thirdparty/log/log.h
 cjson := thirdparty/cjson/cJSON.c thirdparty/cjson/cJSON.h
 app_mqtt := app/app_mqtt.c app/app_mqtt.h
 app_pool := app/app_pool.c app/app_pool.h
+app_buffer:= app/app_buffer.c app/app_buffer.h
 
 log_test: test/log_test.c $(log)
 	@$(cc) $^ -o $@ -Ithirdparty
@@ -39,6 +40,11 @@ thread_test3: test/thread_test3.c $(log)
 	@rm -rf $@
 
 app_pool_test: test/app_pool_test.c $(log) $(app_pool)
+	@$(cc) $^ -o $@ -Ithirdparty -Iapp
+	@./$@
+	@rm -rf $@
+
+app_buffer_test: test/app_buffer_test.c $(log) $(app_buffer)
 	@$(cc) $^ -o $@ -Ithirdparty -Iapp
 	@./$@
 	@rm -rf $@
