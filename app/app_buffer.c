@@ -78,7 +78,7 @@ void app_buffer_deinit(buffer_handle_t  *buffer_handle)
     free(buffer->sub_buffer[0]);
     free(buffer->sub_buffer[1]->ptr);
     free(buffer->sub_buffer[1]);
-    free(buffer->sub_buffer);
+    // free(buffer->sub_buffer);
     pthread_mutex_destroy(&buffer->read_lock);
     pthread_mutex_destroy(&buffer->write_lock);
     free(buffer);

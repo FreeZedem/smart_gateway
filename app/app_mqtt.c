@@ -1,7 +1,7 @@
 #include "app_mqtt.h"
 #include <openssl/ssl.h> // 必须包含
 #include <openssl/err.h> // 必须包含
-#define ADDRESS "tcp://192.168.56.30:1883"
+#define ADDRESS "tcp://192.168.56.26:1883"
 #define CLIENTID "smart_gateway_client"
 #define TOPIC_PULL "pull"
 #define TOPIC_PUSH "push"

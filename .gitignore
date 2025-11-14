@@ -1,3 +1,6 @@
 *.o
 .vscode
 *.crt
+output
+toolchain
+sysroot

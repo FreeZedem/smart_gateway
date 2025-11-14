@@ -1,5 +1,6 @@
 #include "app_dev.h"
 #include "app_msg.h"
+#include "app_modbus.h"
 
 typedef struct
 {
@@ -52,7 +53,18 @@ GATE_STATE_T app_dev_init(void)
     }
     log_info("buffer init ok");
 
-    // modbus初始化 TODO
+    // modbus初始化
+    GATE_STATE_T state = app_modbus_init();
+        if (state != GATE_OK)
+    {
+        log_fatal("modubs init error");
+        app_buffer_deinit(device.down_buffer);
+        app_buffer_deinit(device.up_buffer);
+        app_pool_deinit();
+        app_mqtt_deinit();
+        return GATE_ERRO;
+    }
+    log_info("modbus init ok");
 
     log_info("dev init ok");
     return GATE_OK;
@@ -122,17 +134,23 @@ void app_modbus_task(void *args)
 
         if (strcmp(msg.action, "set") == 0)
         {
-            //TODO,设置电机速度
+            //设置电机速度
+            app_modbus_write_hold_register(msg.motorId, (uint16_t)msg.motorSpeed);
         }
 
         if (strcmp(msg.action, "get") == 0)
         {
-            //TODO，获取电机状态，给MODBUS发数据
-
-            //下面进行测试
-            msg.status = "ok";
-            msg.motorSpeed=110;
-
+            //获取电机状态，给MODBUS发数据
+            GATE_STATE_T state = app_modbus_read_input_register(msg.motorId, (uint16_t*)&msg.motorSpeed);
+            if (state == GATE_OK)
+            {
+                msg.status = "ok";
+            }
+            else
+            {
+                msg.status = "error";
+                msg.motorSpeed = 0;
+            }
             memset(data, 0, sizeof(data));
             msg_2_json(&msg, data);
             app_buffer_write(device.up_buffer, data, (uint8_t)strlen(data));
