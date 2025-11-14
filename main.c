@@ -1,17 +1,24 @@
-#include "app_dev.h"
+#include "app_runner.h"
+#include "app_common.h"
+
 int main(int argc, char const *argv[])
 {
-    app_dev_init();
-    app_dev_start();
-
-    while (app_dev_get_is_running())
+    if (argc == 1)
     {
-        log_info("设备正在运行....");
-        sleep(1);
+        log_info("请输入参数：app|ota|daemon");
+    }else if (strcmp(argv[1], "app") == 0)
+    {
+        app_run();
     }
-
-    app_dev_deinit();
-    log_info("设备已停止运行...");
-
+    else if (strcmp(argv[1], "ota") == 0)
+    {
+        //TODO: 启动OTA服务
+    }else if (strcmp(argv[1], "daemon") == 0)
+    {
+        //TODO: 启动守护进程
+    }else{
+        log_info("请输入参数:app|ota|daemon");
+    }
+    
     return 0;
 }
