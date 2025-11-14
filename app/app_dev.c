@@ -111,7 +111,7 @@ void app_modbus_task(void *args)
     {
         memset(data, 0, sizeof(data));
         int real_len = app_buffer_read(device.down_buffer, data, sizeof(data));
-        if (real_len > 0)
+        if (real_len == 0)
             continue;
 
         msg_t msg;
